@@ -1,0 +1,10 @@
+SimpleITK
+vtk
+pyvista
+pyacvd
+tensorflow
+tensorflow-addons
+# cython # see README.md
+# pyezzi # see README.md
+scikit-learn
+scikit-image
