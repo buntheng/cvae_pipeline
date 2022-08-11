@@ -4,7 +4,7 @@
 
 - Pull this package
 ``` shell
-> git clone XXXX ~/CVAE-dist
+> git clone https://github.com/buntheng/cvae_pipeline.git 
 ```
 
 - Third party packages
@@ -22,7 +22,7 @@
 pip install -r requirements.txt
 ```
 
-- Known bug: `cython` and `pyezzi`
+- **Known bug**: `cython` and `pyezzi`
 Please make sure that `pyezzi` is compiled correctly, which required `cython`.
 In test machine using `conda`, we had to first install `cython` with `conda install cython`, before installing pyezzi with `pip install pyezzi`.
 
