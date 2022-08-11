@@ -19,24 +19,24 @@ timer = {} # Tracing calculation time
 
 ## IMAGE SEGMENTATION #########################################################
 # Uncomment if you have access to the segmenation model weights
-timer = utils.stopwatch_toggle('Segmentation', trace=timer)
-coarse_model_path = 'model/coarse.json'
-coarse_model_weights = 'model/coarse.h5'
-
-refine_model_path = 'model/refine.json'
-refine_model_weights = 'model/refine.h5'
-crop_ct_img, crop_lv_endo_img, crop_lv_wall_img, crop_rv_epi_img = automate.dual_unet_segmentation(
-    input_img=sitk.ReadImage(ct_img_path),
-    coarse_model_kwargs = dict(model_arch=coarse_model_path, weights=coarse_model_weights,),
-    refine_model_kwargs = dict(model_arch=refine_model_path, weights=refine_model_weights,),
-    )
-
-sitk.WriteImage(crop_ct_img, os.path.join(output_dir, "crop_ct.mha"),)
-sitk.WriteImage(crop_lv_endo_img, os.path.join(output_dir, "crop_lv_endo.mha"),)
-sitk.WriteImage(crop_lv_wall_img, os.path.join(output_dir, "crop_lv_wall.mha"),)
-sitk.WriteImage(crop_rv_epi_img, os.path.join(output_dir, "crop_rv_epi.mha"), )
-
-timer = utils.stopwatch_toggle('Segmentation', trace=timer)
+# timer = utils.stopwatch_toggle('Segmentation', trace=timer)
+# coarse_model_path = 'model/coarse.json'
+# coarse_model_weights = 'model/coarse.h5'
+# 
+# refine_model_path = 'model/refine.json'
+# refine_model_weights = 'model/refine.h5'
+# crop_ct_img, crop_lv_endo_img, crop_lv_wall_img, crop_rv_epi_img = automate.dual_unet_segmentation(
+#     input_img=sitk.ReadImage(ct_img_path),
+#     coarse_model_kwargs = dict(model_arch=coarse_model_path, weights=coarse_model_weights,),
+#     refine_model_kwargs = dict(model_arch=refine_model_path, weights=refine_model_weights,),
+#     )
+# 
+# sitk.WriteImage(crop_ct_img, os.path.join(output_dir, "crop_ct.mha"),)
+# sitk.WriteImage(crop_lv_endo_img, os.path.join(output_dir, "crop_lv_endo.mha"),)
+# sitk.WriteImage(crop_lv_wall_img, os.path.join(output_dir, "crop_lv_wall.mha"),)
+# sitk.WriteImage(crop_rv_epi_img, os.path.join(output_dir, "crop_rv_epi.mha"), )
+# 
+# timer = utils.stopwatch_toggle('Segmentation', trace=timer)
 
 
 # # SAX REORIENTATION ###########################################################
@@ -92,26 +92,26 @@ timer = utils.stopwatch_toggle('Bullseye Computation', trace=timer)
 
 ## CVAE Prediction and GradCAMPP ###############################################
 # Uncomment the following if you have access to the CVAE weights.
-timer = utils.stopwatch_toggle('Arrhythmia Prediction & Attention Map', trace=timer)
-print('Run CVAE Prediction...')
-cvae_weights = os.path.join('model', 'cvae.h5')
-class_prediction, bullseye_mesh, lv_midwall_mesh = automate.cvae_prediction(bullseye_mesh, 
-        lv_midwall_mesh=lv_midwall_mesh,
-        model_weights=cvae_weights,
-        )
+# timer = utils.stopwatch_toggle('Arrhythmia Prediction & Attention Map', trace=timer)
+# print('Run CVAE Prediction...')
+# cvae_weights = os.path.join('model', 'cvae.h5')
+# class_prediction, bullseye_mesh, lv_midwall_mesh = automate.cvae_prediction(bullseye_mesh, 
+#         lv_midwall_mesh=lv_midwall_mesh,
+#         model_weights=cvae_weights,
+#         )
+# 
+# # Write output file
+# bullseye_mesh.save(os.path.join(output_dir, 'lv_flatten_att.vtk'))
+# lv_midwall_mesh.save(os.path.join(output_dir, 'lv_midwall_att.vtk'))
+# np.savetxt(os.path.join(output_dir, 'prediction_score.csv'), 
+#         class_prediction,
+#         delimiter=',', 
+#         header='Negative, Positive',
+#         comments='',
+#         fmt='%.4f',
+#         )
 
-# Write output file
-bullseye_mesh.save(os.path.join(output_dir, 'lv_flatten_att.vtk'))
-lv_midwall_mesh.save(os.path.join(output_dir, 'lv_midwall_att.vtk'))
-np.savetxt(os.path.join(output_dir, 'prediction_score.csv'), 
-        class_prediction,
-        delimiter=',', 
-        header='Negative, Positive',
-        comments='',
-        fmt='%.4f',
-        )
-
-print(f"Prediction score: {class_prediction[0]}")
+# print(f"Prediction score: {class_prediction[0]}")
 timer = utils.stopwatch_toggle('Arrhythmia Prediction & Attention Map', trace=timer)
 
 # Write Timer
